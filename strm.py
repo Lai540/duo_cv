@@ -31,7 +31,6 @@ def main():
     
     # Social media links
     st.header("Connect with me")
-    st.write("[LinkedIn](https://www.linkedin.com/in/your-linkedin)")
     st.write("[Twitter](https://twitter.com/@Wlaihandrozz)")
     st.write("[GitHub](https://github.com/Lai540)")
 
