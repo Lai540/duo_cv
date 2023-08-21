@@ -1,38 +1,35 @@
-import streamlit as st
+from pyramid.config import Configurator
+from pyramid.response import Response
 
-def main():
-    # Page configuration
-    st.set_page_config(
-        page_title="Wilfred Lai - Portfolio",
-        page_icon="📚",
-        layout="centered"
-    )
+def home(request):
+    return Response("""
+        <html>
+        <head>
+            <title>Wilfred Lai - Portfolio</title>
+            <link rel="stylesheet" href="static/style.css">
+        </head>
+        <body>
+            <header>
+                <img src="static/wilfred.png" alt="Wilfred Lai">
+                <h1>Wilfred Lai</h1>
+                <p>Finalist Student, BSc in Mathematics and Computer Science</p>
+            </header>
+            
+            <!-- ... Rest of your content ... -->
+            
+            <footer>
+                <p>Contact me at: wilfredayiekolai@gmail.com</p>
+            </footer>
+        </body>
+        </html>
+    """)
 
-    # Header
-    st.title("Wilfred Lai")
-    st.write("Finalist at Taita Taveta University")
-    st.write("Pursuing Bsc Mathematics and Computer Science")
-    
-    # Display your photo
-    st.image("pht.png", caption="Wilfred Lai", use_column_width=True)
-
-    # Contact section
-    st.header("Contact")
-    st.write("Feel free to reach out to me via email:")
-    st.write("[wilfredayiekolai@gmail.com](mailto:wilfredayiekolai@gmail.com)")
-
-    # FAQ section
-    st.header("FAQ")
-    st.write("Here are some frequently asked questions:")
-    st.write("Q: What are your areas of interest?")
-    st.write("A: I'm interested in data analysis, machine learning, and web development.")
-    st.write("Q: Do you have any coding projects?")
-    st.write("A: Yes, I've worked on various coding projects, including club members management system, web developments")
-    
-    # Social media links
-    st.header("Connect with me")
-    st.write("[Twitter](https://twitter.com/@Wlaihandrozz)")
-    st.write("[GitHub](https://github.com/Lai540)")
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    config = Configurator()
+    config.add_route('home', '/')
+    config.add_view(home, route_name='home')
+    config.add_static_view(name='static', path='strm:static')  # Change this line
+    app = config.make_wsgi_app()
+    from wsgiref.simple_server import make_server
+    server = make_server('0.0.0.0', 6543, app)
+    server.serve_forever()
